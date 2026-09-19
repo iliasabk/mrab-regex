@@ -19939,7 +19939,7 @@ static PyObject* match_expand(MatchObject* self, PyObject* str_template) {
     if (!replacement)
         return NULL;
 
-    init_join_list(&join_info, FALSE, PyUnicode_Check(self->string));
+    init_join_list(&join_info, FALSE, PyUnicode_Check(self->substring));
 
     /* Add each part of the template to the list. */
     size = PyList_Size(replacement);
