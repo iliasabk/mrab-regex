@@ -2916,6 +2916,17 @@ xyzabc
         self.assertEqual(next(it), "a")
         self.assertEqual(next(it2), "b")
 
+    def test_expand_detached_string(self):
+        # expand() must not dereference the detached target string (issue #619).
+        m = regex.match("x", "x")
+        m.detach_string()
+        self.assertEqual(m.expand("literal"), "literal")
+        self.assertEqual(m.expand(r"[\g<0>]"), "[x]")
+
+        mb = regex.match(b"x", b"x")
+        mb.detach_string()
+        self.assertEqual(mb.expand(rb"[\g<0>]"), b"[x]")
+
     def test_format(self):
         self.assertEqual(regex.subf(r"(\w+) (\w+)", "{0} => {2} {1}",
           "foo bar"), "foo bar => bar foo")
